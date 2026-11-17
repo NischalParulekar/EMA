@@ -1,6 +1,4 @@
-# Pins relaxed to floors (>=) so pip resolves Python 3.14-compatible builds.
-# Original plan used exact == pins (numpy 1.26.4 / asyncpg 0.29.0 / pydantic 2.7.0
-# etc.), which have no cp314 wheels. See conversation for rationale.
+# Floors (>=) rather than exact pins so pip can resolve Python 3.14 wheels.
 fastapi>=0.115.0
 uvicorn[standard]>=0.30.0
 pydantic>=2.7.0
