@@ -1,0 +1,25 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          python-version: "3.12"
+      - name: Install
+        run: |
+          uv venv
+          uv pip install -e ".[dev]"
+          uv pip install --no-deps -r requirements-impossiblebench.txt
+      - name: Unit tests
+        run: uv run --no-sync pytest -m "not network" -q
+      - name: Smoke test (Inspect task end to end with a mock model)
+        run: uv run --no-sync pytest -m network -q
