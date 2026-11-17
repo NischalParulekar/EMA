@@ -1,0 +1,33 @@
+[build-system]
+requires = ["hatchling>=1.25"]
+build-backend = "hatchling.build"
+
+[project]
+name = "ema"
+version = "0.1.0"
+description = "Does memory of past failure carry over into reward hacking? An Inspect AI experiment."
+readme = "README.md"
+license = "MIT"
+# ImpossibleBench uses Python 3.12 f-string syntax, so 3.12 is the floor.
+requires-python = ">=3.12"
+# impossiblebench itself is NOT listed here: its install_requires pull an
+# unpinned inspect_evals from git HEAD plus swebench, which the LiveCodeBench
+# tasks never import. Install it separately with --no-deps (see README).
+dependencies = [
+    "inspect-ai==0.3.290",
+    "datasets>=3.0",
+    "pandas>=2.0",
+    "jsonlines>=4.0",
+    "platformdirs>=4.0",
+    "tqdm>=4.60",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/ema"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = ["network: needs the Hugging Face dataset download"]

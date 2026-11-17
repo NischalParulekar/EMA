@@ -94,9 +94,13 @@ legacy/phase1-chat-app/  # original prototype, not maintained
 ## Running
 
 ```bash
-uv venv --python 3.11 && uv pip install -e ".[dev]"
+uv venv --python 3.12
+uv pip install -e ".[dev]"
+uv pip install --no-deps -r requirements-impossiblebench.txt
 pytest                      # unit tests + mock-model smoke test, CPU only
 ```
+
+ImpossibleBench is installed with `--no-deps` from a pinned commit. Its declared dependencies pull `inspect_evals` from an unpinned git HEAD, plus `swebench`, and the LiveCodeBench tasks import neither. Its code uses Python 3.12 syntax, so 3.12 is the minimum.
 
 A real run needs a GPU. Open [`notebooks/kaggle_pilot.ipynb`](notebooks/kaggle_pilot.ipynb) on Kaggle (2×T4). It serves the model with vLLM, runs conditions A and C, and writes logs and a summary CSV to `results/`. To run a single condition directly:
 

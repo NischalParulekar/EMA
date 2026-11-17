@@ -1,0 +1,1 @@
+impossiblebench @ git+https://github.com/safety-research/impossiblebench@d4f9a149db2b9cec0fed7bab01d91c07ee10aca2
