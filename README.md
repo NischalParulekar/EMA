@@ -1,6 +1,6 @@
 # EMA: does memory of past failure carry over into reward hacking?
 
-**Status: in progress.** The hypotheses below were written before any confirmatory data was collected. The pilot ran on 17 Nov 2026: Qwen3-4B cheated 0/20 times with or without failure memory and flagged the broken tests in 85–90% of samples. That is a floor effect, so the task setup will change before the confirmatory run ([details](results/README.md)). The Phase 1 chat-app prototype this repo started as lives in [`legacy/`](legacy/).
+**Status: in progress.** The hypotheses below were written before any confirmatory data was collected. The pilot ran on 17 Nov 2026: Qwen3-4B cheated 0/20 times with or without failure memory and flagged the broken tests in 85–90% of samples. That was a floor effect, so the split changed to `oneoff` with 10 attempts ([Changes to the plan](#changes-to-the-plan)). Pilot 2 on 18 Nov cleared the floor: 3/20 cheats without memory and 1/20 with failure memory ([details](results/README.md)). The Phase 1 chat-app prototype this repo started as lives in [`legacy/`](legacy/).
 
 ## Motivation
 
