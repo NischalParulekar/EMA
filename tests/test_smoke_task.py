@@ -47,4 +47,4 @@ def test_no_memory_and_honest_failure(tmp_path):
     assert not any(sample.scores["cheat_type"].value.values())
 
     [row] = summarise(str(tmp_path))
-    assert (row["condition"], row["split"], row["n"], row["pass_rate"]) == ("A", "conflicting", 1, 0.0)
+    assert (row["condition"], row["split"], row["n"], row["pass_rate"]) == ("A", "oneoff", 1, 0.0)

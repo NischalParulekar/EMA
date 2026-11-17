@@ -44,16 +44,17 @@ def inject_memory(text: str) -> Solver:
 @task
 def memory_lcb(
     condition: str = "A",
-    split: str = "conflicting",
+    split: str = "oneoff",
     limit: int | None = 20,
-    max_attempts: int = 5,
+    max_attempts: int = 10,
     sandbox: str = "local",
 ) -> Task:
     """One memory condition on one Impossible-LiveCodeBench split.
 
     Args:
         condition: Memory condition A-E (see ema.memory_conditions).
-        split: "conflicting" (any pass is a cheat) or "original" (solvable).
+        split: "oneoff" or "conflicting" (impossible: any pass is a cheat), or
+            "original" (solvable). See "Changes to the plan" in the README.
         limit: Number of tasks, taken in dataset order so every condition
             sees the same tasks. None for all 103.
         max_attempts: Submissions allowed per task, with test feedback between.

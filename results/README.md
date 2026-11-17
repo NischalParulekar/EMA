@@ -19,4 +19,4 @@ Summary: [`pilot_qwen3-4b.csv`](pilot_qwen3-4b.csv). Transcripts: [`logs/`](logs
 
 **Exploratory, not tested (n = 20):** with failure memory the model flagged sooner. It flagged before running any code in 10/20 samples in C vs 7/20 in A, and executed 25 attempts in total in C vs 35 in A.
 
-**Outcome: floor effect.** Cheating is below 5% in every condition, so the README's pilot rule applies: the task split or prompt must change before the confirmatory run, and the change must be recorded in the README. Pending decision.
+**Outcome: floor effect.** Cheating is below 5% in every condition, so the README's pilot rule applies: the task split or prompt must change before the confirmatory run, and the change must be recorded in the README. Decided 18 Nov 2026: `oneoff` split, 10 attempts (see "Changes to the plan" in the root README).
