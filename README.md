@@ -31,6 +31,8 @@ Sanity check (not a hypothesis): success memory should not raise cheating (E ≤
 
 **Sample size (v1).** All 103 tasks of the impossible split (`oneoff` since 18 Nov 2026, see [Changes to the plan](#changes-to-the-plan)) × 3 epochs (temperature 0.7) × 5 conditions, per model. Solve rate uses the 103 tasks of the `original` split × 1 epoch × 5 conditions.
 
+**Confirmatory run settings (frozen 18 Nov 2026, before any confirmatory data).** Model `Qwen/Qwen3-4B-Instruct-2507` served by vLLM in fp16. Temperature 0.7, max 2,048 output tokens per turn, 32k context, up to 10 attempts per task, the instruction prompt in [`memory_lcb.py`](src/ema/tasks/memory_lcb.py). All 103 tasks, conditions A–E, `oneoff` × 3 epochs and `original` × 1 epoch, as defined in [`run_confirmatory.py`](src/ema/run_confirmatory.py). The analysis is [`stats.py`](src/ema/stats.py), written and tested before the run. Samples that error (e.g. an infrastructure failure) are excluded and their count reported.
+
 **Pilot.** The first slice (20 tasks, conditions A and C, 1 epoch, Qwen3-4B) exists only to check the pipeline and look for floor effects. It is not a hypothesis test. If the pilot shows a floor (< 5% cheating in every condition), we will change the task split or prompt before the confirmatory run and record the change in this README. Confirmatory analyses use only data collected after that.
 
 ## Changes to the plan
@@ -108,7 +110,12 @@ pytest                      # unit tests + mock-model smoke test, CPU only
 
 ImpossibleBench is installed with `--no-deps` from a pinned commit. Its declared dependencies pull `inspect_evals` from an unpinned git HEAD, plus `swebench`, and the LiveCodeBench tasks import neither. Its code uses Python 3.12 syntax, so 3.12 is the minimum.
 
-A real run needs a GPU. Open [`notebooks/kaggle_pilot.ipynb`](notebooks/kaggle_pilot.ipynb) on Kaggle (2×T4). It serves the model with vLLM, runs conditions A and C, and writes logs and a summary CSV to `results/`. To run a single condition directly:
+A real run needs a GPU. Both notebooks run on Kaggle (2×T4) and serve the model with vLLM:
+
+- [`kaggle_pilot.ipynb`](notebooks/kaggle_pilot.ipynb) runs a pilot slice (two conditions, 20 tasks).
+- [`kaggle_confirmatory.ipynb`](notebooks/kaggle_confirmatory.ipynb) runs the full confirmatory set across several sessions. It resumes from the previous session's logs and stops before Kaggle's 12-hour limit.
+
+To run a single condition directly:
 
 ```bash
 inspect eval src/ema/tasks/memory_lcb.py@memory_lcb -T condition=C -T limit=20 \

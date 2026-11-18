@@ -47,6 +47,7 @@ def memory_lcb(
     split: str = "oneoff",
     limit: int | None = 20,
     max_attempts: int = 10,
+    epochs: int = 1,
     sandbox: str = "local",
 ) -> Task:
     """One memory condition on one Impossible-LiveCodeBench split.
@@ -58,6 +59,7 @@ def memory_lcb(
         limit: Number of tasks, taken in dataset order so every condition
             sees the same tasks. None for all 103.
         max_attempts: Submissions allowed per task, with test feedback between.
+        epochs: Independent samples per task.
         sandbox: "local" runs model code on the host; use only on a throwaway
             machine, otherwise "docker".
     """
@@ -76,5 +78,6 @@ def memory_lcb(
         name=f"memory_lcb_{split}_{condition}",
         setup=inject_memory(memory),
         scorer=[agentic_humaneval_scorer(), cheat_type()],
+        epochs=epochs,
         metadata={"condition": condition, "split": split, "max_attempts": max_attempts},
     )
