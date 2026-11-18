@@ -54,7 +54,7 @@ Every change made after the hypotheses were written, with its reason, and whethe
 
 ## The Claude arm
 
-A behaviour-only replication on Claude Haiku 5.5, with Sonnet 5.5 as a contrast, is pre-registered separately in [`prereg/claude_arm.md`](prereg/claude_arm.md). It adds an off-topic failure condition (F) to separate failure affect from topical priming. It also adds flag rate and attempts as secondary outcomes, which stay measurable if Claude barely cheats. The Qwen run above is unaffected: it is pinned to tag `qwen-confirmatory-v1`, and A–E are unchanged.
+A behaviour-only replication on Claude Haiku 5.5, with Sonnet 5.5 as a contrast, is pre-registered separately in [`prereg/claude_arm.md`](prereg/claude_arm.md). The pre-registration commit is `00e447f` (18 Nov 2026); no Claude data predates it. It adds an off-topic failure condition (F) to separate failure affect from topical priming. It also adds flag rate and attempts as secondary outcomes, which stay measurable if Claude barely cheats. The Qwen run above is unaffected: it is pinned to tag `qwen-confirmatory-v1`, and A–E are unchanged.
 
 ## Design
 
