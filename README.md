@@ -52,6 +52,10 @@ Every change made after the hypotheses were written, with its reason, and whethe
 - **18 Nov 2026: the Qwen run is pinned to git tag `qwen-confirmatory-v1`** (commit `15bcc04`), so later work on `main`, such as the Claude arm, cannot change it. No settings changed. *Confirmatory data existed: session 1's 188 samples.*
 - **18 Nov 2026: README text only.** The related work and novelty sentence were updated, the Models rationale was corrected, and [interpretation notes](#interpretation-notes) were added. Hypotheses, analysis and settings are unchanged. *Confirmatory data existed (188 samples), and the author had seen interim counts. See the disclosure in the notes.*
 
+## The Claude arm
+
+A behaviour-only replication on Claude Haiku 5.5, with Sonnet 5.5 as a contrast, is pre-registered separately in [`prereg/claude_arm.md`](prereg/claude_arm.md). It adds an off-topic failure condition (F) to separate failure affect from topical priming. It also adds flag rate and attempts as secondary outcomes, which stay measurable if Claude barely cheats. The Qwen run above is unaffected: it is pinned to tag `qwen-confirmatory-v1`, and A–E are unchanged.
+
 ## Design
 
 ### Tasks
@@ -110,12 +114,19 @@ These are notes, not hypotheses. They were added on 18 Nov 2026, **after confirm
 
 ```
 src/ema/
-  memory_conditions.py   # the five memory snapshots (A–E)
+  memory_conditions.py   # memory snapshots: A–E (Qwen arm), plus F (Claude arm)
   tasks/                 # Inspect tasks: ImpossibleBench + memory injection
   scorers/               # rule-based cheat-type detector
   analysis.py            # Inspect logs -> per-condition rates with Wilson CIs
-notebooks/               # Kaggle/Colab runners
-results/                 # Inspect logs summaries, CSVs, plots (small files only)
+  stats.py               # pre-registered Qwen-arm analysis (frozen)
+  run_confirmatory.py    # the Qwen confirmatory eval set (frozen, tag qwen-confirmatory-v1)
+  stats_claude.py        # pre-registered Claude-arm analysis
+  run_claude.py          # the Claude arm (pilot, confirmatory)
+prereg/                  # separate pre-registrations (Claude arm)
+sandbox/                 # pinned Docker sandbox for API-model runs
+docs/                    # prior-work search log, power simulation
+notebooks/               # Kaggle runners
+results/                 # summaries, CSVs, Inspect logs (small files only)
 tests/                   # unit tests + CPU smoke test with a mock model
 legacy/phase1-chat-app/  # original prototype, not maintained
 ```

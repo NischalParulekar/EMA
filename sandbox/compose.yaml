@@ -1,0 +1,10 @@
+# Sandbox for the Claude arm: runs model-written code in a pinned image with
+# no network. (The Qwen arm runs on throwaway Kaggle VMs with the local sandbox.)
+services:
+  default:
+    image: python:3.12-bookworm@sha256:4209fae09a3e20afd863e528bfddc235da5fd5977983e1996cd54cc9a72e6267
+    init: true
+    command: tail -f /dev/null
+    network_mode: none
+    cpus: 1.0
+    mem_limit: 1gb
