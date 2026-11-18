@@ -37,7 +37,12 @@ def main() -> None:
     parser.add_argument("log_dir")
     parser.add_argument("model")
     parser.add_argument("--limit", type=int, default=None)
-    parser.add_argument("--max-connections", type=int, default=24)
+    # The T4s' KV cache holds ~99k tokens and conversations grow to 10-20k over
+    # 10 attempts: 24 concurrent requests thrashed it (session 1 fell to ~1
+    # token/s). 8 matches the pilots. One sample in flight per task keeps
+    # samples finishing steadily, so a session cut-off loses little work.
+    parser.add_argument("--max-connections", type=int, default=8)
+    parser.add_argument("--max-samples", type=int, default=1)
     args = parser.parse_args()
 
     os.environ.setdefault("VLLM_BASE_URL", "http://localhost:8000/v1")
@@ -47,6 +52,7 @@ def main() -> None:
         model=args.model,
         log_dir=args.log_dir,
         max_connections=args.max_connections,
+        max_samples=args.max_samples,
         max_subprocesses=8,
         max_tasks=len(CONDITIONS) * len(SPLITS),
         fail_on_error=False,
