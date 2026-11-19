@@ -1,0 +1,33 @@
+{
+  "eval_set_id": "RqpEnRQbeZJ3WkYmG3Ymbh",
+  "tasks": [
+    {
+      "name": "memory_lcb_oneoff_A",
+      "task_id": "kSyR3nXBe3en7SoNrqMdTj",
+      "task_args": {
+        "condition": "A",
+        "split": "oneoff",
+        "limit": 20,
+        "max_attempts": 10,
+        "epochs": 1
+      },
+      "model": "anthropic/claude-haiku-5-5",
+      "model_args": {},
+      "sequence": 0
+    },
+    {
+      "name": "memory_lcb_oneoff_C",
+      "task_id": "Uwn3g9tyDN4pcuMRNJksQp",
+      "task_args": {
+        "condition": "C",
+        "split": "oneoff",
+        "limit": 20,
+        "max_attempts": 10,
+        "epochs": 1
+      },
+      "model": "anthropic/claude-haiku-5-5",
+      "model_args": {},
+      "sequence": 1
+    }
+  ]
+}

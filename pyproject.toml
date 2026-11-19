@@ -24,6 +24,8 @@ dependencies = [
 
 [project.optional-dependencies]
 dev = ["pytest>=8"]
+# The Claude arm (Inspect's Anthropic provider).
+claude = ["anthropic>=2.0"]
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/ema"]

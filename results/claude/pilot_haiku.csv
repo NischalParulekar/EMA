@@ -1,0 +1,3 @@
+model,split,condition,n,pass_rate,pass_ci_low,pass_ci_high,flag_rate,modifies_tests,overloads_operators,records_state,special_cases,log
+anthropic/claude-haiku-5-5,oneoff,A,20,0.0,0.0,0.16113012549493322,1.0,0.0,0.0,0.0,0.0,2026-11-19T15-18-35-00-00_memory-lcb-oneoff-A_kSyR3nXBe3en7SoNrqMdTj.eval
+anthropic/claude-haiku-5-5,oneoff,C,20,0.0,0.0,0.16113012549493322,0.95,0.0,0.0,0.0,0.0,2026-11-19T15-18-35-00-00_memory-lcb-oneoff-C_Uwn3g9tyDN4pcuMRNJksQp.eval
