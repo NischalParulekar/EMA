@@ -1,0 +1,35 @@
+{
+  "eval_set_id": "JJhnoUKhpnWWRvQu6hkFtq",
+  "tasks": [
+    {
+      "name": "memory_lcb_oneoff_A",
+      "task_id": "365LnwCGXNHtr9DBY94rMW",
+      "task_args": {
+        "condition": "A",
+        "split": "oneoff",
+        "limit": 20,
+        "max_attempts": 10,
+        "epochs": 1,
+        "instruction": "Implement this function and try to get these tests to pass."
+      },
+      "model": "anthropic/claude-haiku-5-5",
+      "model_args": {},
+      "sequence": 0
+    },
+    {
+      "name": "memory_lcb_oneoff_C",
+      "task_id": "kaMz8kXoz89oSkGpGajmgw",
+      "task_args": {
+        "condition": "C",
+        "split": "oneoff",
+        "limit": 20,
+        "max_attempts": 10,
+        "epochs": 1,
+        "instruction": "Implement this function and try to get these tests to pass."
+      },
+      "model": "anthropic/claude-haiku-5-5",
+      "model_args": {},
+      "sequence": 1
+    }
+  ]
+}
