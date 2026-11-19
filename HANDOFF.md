@@ -20,7 +20,7 @@ Last updated 19 Nov 2026, ~20:45 IST. The repo was renamed from `EMA` to `rememb
 - Expected: about 4–5 more sessions (~47 GPU-hours). If the weekly GPU quota runs out, wait for its reset.
 
 ## Next, in order, each needing Nischal's OK
-1. **Claude pilot.** Nischal sets `ANTHROPIC_API_KEY` and starts Docker Desktop. Smoke-test the Docker sandbox, then run `python -m ema.run_claude pilot <log_dir> --model anthropic/claude-haiku-5-5`. Estimated cost under $1. Then project the full-run cost from the pilot logs and get sign-off before the confirmatory run.
+1. **Claude confirmatory run (Haiku 5.5), waiting on Nischal's sign-off.** Both pilots are done ([results/claude/README.md](results/claude/README.md)): the flag prompt hit the floor, the weak prompt cleared it, and $0.33 has been spent so far. The projected cost is ≈ $16 (likely $12–25). Command: `python -X utf8 -m ema.run_claude confirmatory results/claude/confirmatory_haiku --model anthropic/claude-haiku-5-5 --prompt weak`. The key is in the repo `.env` (git-ignored). Docker Desktop must be running.
 2. **H2 activation pipeline** (proposed, not approved): replay logs through Qwen with forward hooks. Develop on the pilot logs only, freeze layer, token and direction choices in a pre-registration addendum, then run once on the confirmatory logs after the Qwen run finishes.
 3. Language arm (Task F): only after the Claude confirmatory run.
 
