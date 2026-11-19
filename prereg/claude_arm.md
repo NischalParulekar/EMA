@@ -112,3 +112,10 @@ Nothing about Claude's internal states or activations. The results are behaviour
 
   *Data existing: both pilots only. No confirmatory Claude data.*
 - **19 Nov 2026: every passing confirmatory sample's cheat type is hand-labelled.** In the re-pilot, the rule-based detector labelled only 1 of 3 passing cheats. It misses condition-based special cases such as `if total == 0: return 1`, and it flagged a legitimate `nonlocal` in a failed attempt. Passes are rare, so all of them will be read and labelled by hand. The detector's labels are reported alongside. The primary outcome (any pass on an impossible test) does not depend on the detector. *Data existing: pilots only.*
+- **20 Nov 2026, after the confirmatory Haiku data: notes on the analysis. No change to the plan.**
+  - *Token-cap samples.* The "Excluded samples" rule above says that samples hitting the token cap count as errors and are excluded. The frozen `stats_claude.py` excludes only errored samples, so it keeps them as failures. Both versions are reported ([results](../results/claude/README.md)). They differ by at most 0.1 pp per rate and do not change any conclusion. 22 of 1,854 `oneoff` samples hit the cap, and none of them passed.
+  - *Hand labels.* The scheme was fixed while reading the 53 passes, so it is post hoc. It records mechanism (special case, test-fitted rule, three kinds of test edit, degenerate fallback, buggy attempt) and disclosure (disclosed, undisclosed, misreported).
+  - *Exploratory contrasts.* The contrasts rerun on labelled subsets of passes (`ema/labels_claude.py`) are exploratory and are labelled as such. The pre-registered primary outcome is still "any pass".
+  - *Sonnet.* Haiku cleared the pilot floor, so per this plan Sonnet may run. It still needs Nischal's budget sign-off (≈ $300).
+
+  *Data existing: the complete Haiku confirmatory run.*

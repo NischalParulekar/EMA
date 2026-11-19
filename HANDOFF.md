@@ -1,12 +1,13 @@
 # HANDOFF: where the EMA work stands
 
-Last updated 19 Nov 2026, ~20:45 IST. The repo was renamed from `EMA` to `remembered-failure` (the old URL redirects).
+Last updated 20 Nov 2026, ~05:45 IST. The repo was renamed from `EMA` to `remembered-failure` (the old URL redirects).
 
 ## Done (all committed and pushed)
 - Repo restructured, README written with pre-registered H1–H4. Pilots 1 and 2 done ([results/README.md](results/README.md)).
 - Qwen confirmatory run frozen and pinned to tag `qwen-confirmatory-v1` (commit 15bcc04). Analysis in `src/ema/stats.py`.
 - Review-handoff tasks A–D: citations verified, novelty narrowed to the emotional *register* of remembered failures (The Memory Trap, an ICLR 2027 submission, already shows that memory raises cheating), Models rationale corrected, interpretation notes and power simulation added. Search log: [docs/prior_work_search.md](docs/prior_work_search.md).
-- Claude arm **pre-registered only** (commit 00e447f, [prereg/claude_arm.md](prereg/claude_arm.md)). Condition F added. **No Claude runs, no API spend.**
+- Claude arm pre-registered (commit 00e447f, [prereg/claude_arm.md](prereg/claude_arm.md)). Pilots done, and the floor was cleared with the weak prompt.
+- **Haiku 5.5 confirmatory run done (20 Nov 2026): null on H1-C, H3-C and H5-C** (all Holm p = 1.0). It ran 2,472/2,472 samples with 0 errors and cost $14.85; total Claude spend is $15.18. All 53 passes are hand-labelled in `results/claude/confirmatory_haiku_labels.csv`. 43 of 53 were disclosed; 19 are test edits that the scaffold scores as passes. The exploratory hypothesis: failure memory shifts *how* the model passes, not *how often*. Results are in [results/claude/README.md](results/claude/README.md), and the deliverable is [docs/memory_writing_guideline.md](docs/memory_writing_guideline.md).
 
 ## In progress: Qwen confirmatory run on Kaggle
 - Kernel: `claude01012000/ema-confirmatory-qwen3-4b` (private). Logs dataset: `claude01012000/ema-confirmatory-logs` (private).
@@ -20,9 +21,9 @@ Last updated 19 Nov 2026, ~20:45 IST. The repo was renamed from `EMA` to `rememb
 - Expected: about 4–5 more sessions (~47 GPU-hours). If the weekly GPU quota runs out, wait for its reset.
 
 ## Next, in order, each needing Nischal's OK
-1. **Claude confirmatory run (Haiku 5.5), waiting on Nischal's sign-off.** Both pilots are done ([results/claude/README.md](results/claude/README.md)): the flag prompt hit the floor, the weak prompt cleared it, and $0.33 has been spent so far. The projected cost is ≈ $16 (likely $12–25). Command: `python -X utf8 -m ema.run_claude confirmatory results/claude/confirmatory_haiku --model anthropic/claude-haiku-5-5 --prompt weak`. The key is in the repo `.env` (git-ignored). Docker Desktop must be running.
+1. **Sonnet 5.5 confirmatory run** (≈ $300, *not approved*). The pre-registration allows it now that Haiku cleared the floor. If it runs, H4-C is `python -m ema.stats_claude results/claude/confirmatory_haiku results/claude/confirmatory_sonnet`. Before spending, consider a pre-registered follow-up that scores *disclosure* instead of any pass, since that is where the exploratory signal is.
 2. **H2 activation pipeline** (proposed, not approved): replay logs through Qwen with forward hooks. Develop on the pilot logs only, freeze layer, token and direction choices in a pre-registration addendum, then run once on the confirmatory logs after the Qwen run finishes.
-3. Language arm (Task F): only after the Claude confirmatory run.
+3. Language arm (Task F): the Haiku confirmatory run is done, so it is now unblocked. It needs its own pre-registration and budget sign-off.
 
 ## Open questions for Nischal
 - Approve the usage-visibility setup (option B in `EMA_USAGE_BUDGET.md`) after the reset?

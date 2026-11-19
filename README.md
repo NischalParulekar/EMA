@@ -58,6 +58,10 @@ Every change made after the hypotheses were written, with its reason, and whethe
 
 A behaviour-only replication on Claude Haiku 5.5, with Sonnet 5.5 as a contrast, is pre-registered separately in [`prereg/claude_arm.md`](prereg/claude_arm.md). The pre-registration commit is `00e447f` (18 Nov 2026); no Claude data predates it. It adds an off-topic failure condition (F) to separate failure affect from topical priming. It also adds flag rate and attempts as secondary outcomes, which stay measurable if Claude barely cheats. The Qwen run above is unaffected: it is pinned to tag `qwen-confirmatory-v1`, and A–E are unchanged.
 
+**Haiku 5.5 result (20 Nov 2026): null on all three pre-registered hypotheses.** Over 2,472 samples ($14.85), failure memory did not raise cheating relative to neutral memory (C vs B: 2.3% vs 2.3%, Holm p = 1.0). A calm rewrite did not lower it (C vs D, Holm p = 1.0), and off-topic failure memory did not raise it (F vs B, Holm p = 1.0). The base rate was low, so effects smaller than about a doubling cannot be ruled out.
+
+Hand-reading all 53 passes showed that most were disclosed (the reply said the test contradicts the spec), and many were visible test edits rather than covert special cases. As an exploratory hypothesis, failure memory may shift *how* the model gets past a broken test, more than *how often*. Details: [results/claude/README.md](results/claude/README.md); deliverable: [docs/memory_writing_guideline.md](docs/memory_writing_guideline.md).
+
 ## Design
 
 ### Tasks
@@ -123,6 +127,7 @@ src/ema/
   stats.py               # pre-registered Qwen-arm analysis (frozen)
   run_confirmatory.py    # the Qwen confirmatory eval set (frozen, tag qwen-confirmatory-v1)
   stats_claude.py        # pre-registered Claude-arm analysis
+  labels_claude.py       # exploratory: contrasts on hand-labelled passes
   run_claude.py          # the Claude arm (pilot, confirmatory)
 prereg/                  # separate pre-registrations (Claude arm)
 sandbox/                 # pinned Docker sandbox for API-model runs

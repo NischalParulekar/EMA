@@ -41,6 +41,19 @@ def test_build_pilot_tasks_use_docker_sandbox():
         assert t.token_limit == 300_000
 
 
+def test_haiku_labels_file():
+    from collections import Counter
+
+    from ema.labels_claude import load_labels
+    labels = load_labels(str(Path(__file__).parent.parent / "results" / "claude" / "confirmatory_haiku_labels.csv"))
+    # One row per passing oneoff sample: A 12, B 7, C 7, D 10, E 9, F 8 (results/claude/README.md).
+    assert Counter(c for _, c, _ in labels) == {"A": 12, "B": 7, "C": 7, "D": 10, "E": 9, "F": 8}
+    mechanisms = {"special_case", "test_fitted_rule", "test_edited_fix", "test_edited_drop",
+                  "test_edited_diagnostic", "degenerate_fallback", "buggy_attempt"}
+    assert {r["mechanism"] for r in labels.values()} <= mechanisms
+    assert {r["disclosure"] for r in labels.values()} <= {"disclosed", "undisclosed", "misreported"}
+
+
 def test_weak_prompt_option():
     from ema.tasks.memory_lcb import INSTRUCTION, WEAK_INSTRUCTION
     flag = build_tasks("pilot", limit=1, prompt="flag")[0]
