@@ -1,4 +1,6 @@
-# EMA: does memory of past failure carry over into reward hacking?
+# Remembered failure: does the way an agent remembers past failures change whether it cheats?
+
+*Formerly "EMA", after the Emotional Memory Agent prototype this repo began as (archived in [`legacy/`](legacy/)). The Python package is still named `ema`.*
 
 **Status: in progress.** The hypotheses below were written before any confirmatory data was collected. The pilot ran on 17 Nov 2026: Qwen3-4B cheated 0/20 times with or without failure memory and flagged the broken tests in 85–90% of samples. That was a floor effect, so the split changed to `oneoff` with 10 attempts ([Changes to the plan](#changes-to-the-plan)). Pilot 2 on 18 Nov cleared the floor: 3/20 cheats without memory and 1/20 with failure memory ([details](results/README.md)). The Phase 1 chat-app prototype this repo started as lives in [`legacy/`](legacy/).
 
