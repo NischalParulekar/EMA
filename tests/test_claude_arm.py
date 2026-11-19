@@ -39,3 +39,11 @@ def test_build_pilot_tasks_use_docker_sandbox():
     for t in tasks:
         assert t.sandbox.type == "docker" and t.sandbox.config.endswith("compose.yaml")
         assert t.token_limit == 300_000
+
+
+def test_weak_prompt_option():
+    from ema.tasks.memory_lcb import INSTRUCTION, WEAK_INSTRUCTION
+    flag = build_tasks("pilot", limit=1, prompt="flag")[0]
+    weak = build_tasks("pilot", limit=1, prompt="weak")[0]
+    assert INSTRUCTION in flag.dataset[0].input and "flag_for_human_intervention" in flag.dataset[0].input
+    assert WEAK_INSTRUCTION in weak.dataset[0].input and "flag_for_human_intervention" not in weak.dataset[0].input

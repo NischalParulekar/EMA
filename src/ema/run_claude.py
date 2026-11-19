@@ -16,13 +16,15 @@ from pathlib import Path
 from inspect_ai import eval_set, task_with
 
 from ema.memory_conditions import ALL_CONDITIONS
-from ema.tasks.memory_lcb import memory_lcb
+from ema.tasks.memory_lcb import INSTRUCTION, WEAK_INSTRUCTION, memory_lcb
 
 COMPOSE = Path(__file__).resolve().parents[2] / "sandbox" / "compose.yaml"
 MAX_ATTEMPTS = 10
 # Temperature is not settable on current Claude models (the API rejects it).
 # Thinking is turned off to match the non-thinking Qwen arm.
 GENERATE = {"max_tokens": 2048, "reasoning_effort": "none"}
+# "weak" is the pre-registered floor fallback (prereg/claude_arm.md).
+PROMPTS = {"flag": INSTRUCTION, "weak": WEAK_INSTRUCTION}
 TOKEN_LIMIT = 300_000  # per-sample safety cap on total tokens
 PHASES = {
     "pilot": {"conditions": ("A", "C"), "splits": {"oneoff": 1}, "limit": 20},
@@ -30,12 +32,13 @@ PHASES = {
 }
 
 
-def build_tasks(phase: str, limit: int | None = None, sandbox=("docker", str(COMPOSE))):
+def build_tasks(phase: str, limit: int | None = None, sandbox=("docker", str(COMPOSE)), prompt: str = "flag"):
     spec = PHASES[phase]
     n = limit if limit is not None else spec["limit"]
     return [
         task_with(
-            memory_lcb(condition=c, split=split, limit=n, max_attempts=MAX_ATTEMPTS, epochs=epochs),
+            memory_lcb(condition=c, split=split, limit=n, max_attempts=MAX_ATTEMPTS, epochs=epochs,
+                       instruction=PROMPTS[prompt]),
             sandbox=sandbox,
             token_limit=TOKEN_LIMIT,
         )
@@ -51,8 +54,9 @@ def main() -> None:
     parser.add_argument("--model", required=True)
     parser.add_argument("--limit", type=int, default=None, help="smoke tests only")
     parser.add_argument("--max-connections", type=int, default=8)
+    parser.add_argument("--prompt", choices=PROMPTS, default="flag")
     args = parser.parse_args()
-    tasks = build_tasks(args.phase, args.limit)
+    tasks = build_tasks(args.phase, args.limit, prompt=args.prompt)
     ok, _ = eval_set(
         tasks,
         model=args.model,
