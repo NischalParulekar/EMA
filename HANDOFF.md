@@ -12,7 +12,7 @@ Last updated 20 Nov 2026, ~05:45 IST. The repo was renamed from `EMA` to `rememb
 ## In progress: Qwen confirmatory run on Kaggle
 - Kernel: `claude01012000/ema-confirmatory-qwen3-4b` (private). Logs dataset: `claude01012000/ema-confirmatory-logs` (private).
 - Progress: **934/2,060 unique finished samples after session 3** (ended 20 Nov ~07:25 IST), at about 36 samples/hour, so about 31 GPU-hours (3 sessions) remain. The logs dataset was versioned "after session 3 (934/2060)".
-- **Session 4 is blocked: the weekly 30-hour Kaggle GPU quota is used up.** A local loop retries `kaggle kernels push` every 30 minutes until the quota resets. If that loop has died, push manually (step 4 below); the dataset is already up to date.
+- **Session 4 is blocked: the weekly 30-hour Kaggle GPU quota is used up.** No retry loop is running (stopped 20 Nov at the user's request). Once the quota resets, push manually (step 4 below); the dataset is already up to date.
 - Logs from cancelled sessions are complete up to the interrupt. `eval_set` reports success even after a graceful interrupt, so judge progress by counting unique `(task, id, epoch)` samples. The notebook now does this.
 - **Handover steps between sessions:**
   1. `kaggle kernels output claude01012000/ema-confirmatory-qwen3-4b -p <dir>`. Check `STATUS.txt` and count the samples (see `results/README.md` for how).
@@ -24,7 +24,7 @@ Last updated 20 Nov 2026, ~05:45 IST. The repo was renamed from `EMA` to `rememb
 ## Next, in order, each needing Nischal's OK
 1. **Sonnet 5.5 confirmatory run** (≈ $300, *not approved*). The pre-registration allows it now that Haiku cleared the floor. If it runs, H4-C is `python -m ema.stats_claude results/claude/confirmatory_haiku results/claude/confirmatory_sonnet`. Before spending, consider a pre-registered follow-up that scores *disclosure* instead of any pass, since that is where the exploratory signal is.
 2. **H2 activation pipeline** (approved 20 Nov: "proceed as you think right"). Code is in `src/ema/h2/` (tests in `tests/test_h2.py`), the notebook is `notebooks/kaggle_h2.ipynb`, and the plan is in `prereg/h2_activations.md` (DRAFT). Next steps:
-   - Smoke-tested end to end on CPU with Qwen3-0.6B (20 Nov). The private kernel `claude01012000/ema-h2-qwen3-4b` (`MODE="pilot"`, about 1 GPU-hour) is queued: a local loop retries the push every 30 minutes until the GPU quota frees up. If the loop died, push it from a folder containing the notebook and its `kernel-metadata.json`.
+   - Smoke-tested end to end on CPU with Qwen3-0.6B (20 Nov). The private kernel `claude01012000/ema-h2-qwen3-4b` (`MODE="pilot"`, about 1 GPU-hour) has not been pushed yet, and no retry loop is running. Once GPU quota is free, push it from a folder containing the notebook and its `kernel-metadata.json`.
    - Commit its `out/` to `results/h2/pilot/` and check the validity gate.
    - Freeze the addendum with tag `h2-frozen`.
    - After the Qwen run completes, run `MODE="confirmatory"` with `REF="h2-frozen"` and the logs dataset attached.
