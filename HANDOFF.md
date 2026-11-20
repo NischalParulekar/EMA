@@ -11,9 +11,10 @@ Last updated 20 Nov 2026, ~05:45 IST. The repo was renamed from `EMA` to `rememb
 
 ## In progress: Qwen confirmatory run on Kaggle
 - Kernel: `claude01012000/ema-confirmatory-qwen3-4b` (private). Logs dataset: `claude01012000/ema-confirmatory-logs` (private).
-- Progress: **544/2,060 unique samples after session 2**, at about 32 samples/hour. Session 3 was launched 19 Nov ~20:40 IST (kernel version 4) and stops itself about 11 hours after it starts running.
+- Progress: **934/2,060 unique finished samples after session 3** (ended 20 Nov ~07:25 IST), at about 36 samples/hour, so about 31 GPU-hours (3 sessions) remain. The logs dataset was versioned "after session 3 (934/2060)".
+- **Session 4 is blocked: the weekly 30-hour Kaggle GPU quota is used up.** A local loop retries `kaggle kernels push` every 30 minutes until the quota resets. If that loop has died, push manually (step 4 below); the dataset is already up to date.
 - Logs from cancelled sessions are complete up to the interrupt. `eval_set` reports success even after a graceful interrupt, so judge progress by counting unique `(task, id, epoch)` samples. The notebook now does this.
-- **Next step, the handover to session 3:**
+- **Handover steps between sessions:**
   1. `kaggle kernels output claude01012000/ema-confirmatory-qwen3-4b -p <dir>`. Check `STATUS.txt` and count the samples (see `results/README.md` for how).
   2. Put the contents of `<dir>/logs/confirmatory_qwen3-4b/` into a folder with `dataset-metadata.json` (id `claude01012000/ema-confirmatory-logs`). Copy `.eval-set-id` to `eval-set-id.txt`, because Kaggle drops dotfiles.
   3. Run `kaggle datasets version -p <folder> -m "after session N"`, using a **relative** path; Git Bash absolute paths get mangled.
