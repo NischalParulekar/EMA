@@ -23,7 +23,11 @@ Last updated 20 Nov 2026, ~05:45 IST. The repo was renamed from `EMA` to `rememb
 
 ## Next, in order, each needing Nischal's OK
 1. **Sonnet 5.5 confirmatory run** (≈ $300, *not approved*). The pre-registration allows it now that Haiku cleared the floor. If it runs, H4-C is `python -m ema.stats_claude results/claude/confirmatory_haiku results/claude/confirmatory_sonnet`. Before spending, consider a pre-registered follow-up that scores *disclosure* instead of any pass, since that is where the exploratory signal is.
-2. **H2 activation pipeline** (proposed, not approved): replay logs through Qwen with forward hooks. Develop on the pilot logs only, freeze layer, token and direction choices in a pre-registration addendum, then run once on the confirmatory logs after the Qwen run finishes.
+2. **H2 activation pipeline** (approved 20 Nov: "proceed as you think right"). Code is in `src/ema/h2/` (tests in `tests/test_h2.py`), the notebook is `notebooks/kaggle_h2.ipynb`, and the plan is in `prereg/h2_activations.md` (DRAFT). Next steps:
+   - Push the H2 notebook as its own private Kaggle kernel with `MODE="pilot"` (about 1 GPU-hour), once GPU quota is free and without starving the Qwen run.
+   - Commit its `out/` to `results/h2/pilot/` and check the validity gate.
+   - Freeze the addendum with tag `h2-frozen`.
+   - After the Qwen run completes, run `MODE="confirmatory"` with `REF="h2-frozen"` and the logs dataset attached.
 3. Language arm (Task F): the Haiku confirmatory run is done, so it is now unblocked. It needs its own pre-registration and budget sign-off.
 
 ## Open questions for Nischal

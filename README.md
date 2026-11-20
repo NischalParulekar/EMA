@@ -129,7 +129,8 @@ src/ema/
   stats_claude.py        # pre-registered Claude-arm analysis
   labels_claude.py       # exploratory: contrasts on hand-labelled passes
   run_claude.py          # the Claude arm (pilot, confirmatory)
-prereg/                  # separate pre-registrations (Claude arm)
+  h2/                    # H2: direction stories, replay with hooks, projection analysis
+prereg/                  # separate pre-registrations (Claude arm, H2 addendum)
 sandbox/                 # pinned Docker sandbox for API-model runs
 docs/                    # prior-work search log, power simulation
 notebooks/               # Kaggle runners
