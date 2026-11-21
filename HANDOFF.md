@@ -22,13 +22,13 @@ Last updated 20 Nov 2026, ~05:45 IST. The repo was renamed from `EMA` to `rememb
   4. Run `kaggle kernels push -p <kernel dir> --accelerator NvidiaTeslaT4`. The kernel metadata must list the dataset in `dataset_sources`.
 - Expected: about 5 more sessions (~55 GPU-hours) at session 4's rate. If the weekly GPU quota runs out, wait for its reset.
 
+## Write-up
+- Report skeleton started 22 Nov: [docs/report.md](docs/report.md). Completed work is filled in; every Qwen and H2 confirmatory result is a [TBD] placeholder, to be filled only from the frozen analyses on complete data.
+
 ## Next, in order, each needing Nischal's OK
 1. **Sonnet 5.5 confirmatory run** (≈ $300, *not approved*). The pre-registration allows it now that Haiku cleared the floor. If it runs, H4-C is `python -m ema.stats_claude results/claude/confirmatory_haiku results/claude/confirmatory_sonnet`. Before spending, consider a pre-registered follow-up that scores *disclosure* instead of any pass, since that is where the exploratory signal is.
 2. **H2 activation pipeline** (approved 20 Nov: "proceed as you think right"). Code is in `src/ema/h2/` (tests in `tests/test_h2.py`), the notebook is `notebooks/kaggle_h2.ipynb`, and the plan is in `prereg/h2_activations.md` (DRAFT). Next steps:
    - Smoke-tested end to end on CPU with Qwen3-0.6B (20 Nov). The private kernel `claude01012000/ema-h2-qwen3-4b` (`MODE="pilot"`, about 1 GPU-hour) ran on 21 Nov. Version 1 failed at vLLM start-up (an unpinned install picked vLLM 0.22.1); version 2, with vLLM pinned to 0.34.0, completed in ~26 min. Its output is in `results/h2/pilot/`. Validity gate passed: held-out desperate vs calm AUROC 1.00 at layer 24 (0.87 vs the other emotions). The addendum was frozen on 22 Nov (tag `h2-frozen`), after adding a turn-index adjustment to the statistic. Next: once the Qwen run reaches 2,060 samples, run the H2 notebook with `MODE="confirmatory"`, `REF="h2-frozen"` and the final logs dataset attached.
-   - Commit its `out/` to `results/h2/pilot/` and check the validity gate.
-   - Freeze the addendum with tag `h2-frozen`.
-   - After the Qwen run completes, run `MODE="confirmatory"` with `REF="h2-frozen"` and the logs dataset attached.
 3. Language arm (Task F): the Haiku confirmatory run is done, so it is now unblocked. It needs its own pre-registration and budget sign-off.
 
 ## Open questions for Nischal

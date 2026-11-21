@@ -132,7 +132,7 @@ src/ema/
   h2/                    # H2: direction stories, replay with hooks, projection analysis
 prereg/                  # separate pre-registrations (Claude arm, H2 addendum)
 sandbox/                 # pinned Docker sandbox for API-model runs
-docs/                    # prior-work search log, power simulation
+docs/                    # report draft, prior-work search log, power simulation, memory guideline
 notebooks/               # Kaggle runners
 results/                 # summaries, CSVs, Inspect logs (small files only)
 tests/                   # unit tests + CPU smoke test with a mock model
