@@ -1,0 +1,37 @@
+{
+  "model": "Qwen/Qwen3-4B-Instruct-2507",
+  "frozen_layer": 24,
+  "layers": [
+    12,
+    18,
+    24,
+    30
+  ],
+  "n_stories": 1275,
+  "validity": {
+    "12": {
+      "held_out_auroc_desperate_vs_calm": 1.0,
+      "held_out_auroc_desperate_vs_other_emotions": 0.8654545454545455,
+      "held_out_auroc_task_badly_vs_well": 1.0,
+      "neutral_pcs_removed": 7
+    },
+    "18": {
+      "held_out_auroc_desperate_vs_calm": 1.0,
+      "held_out_auroc_desperate_vs_other_emotions": 0.7369696969696969,
+      "held_out_auroc_task_badly_vs_well": 0.8,
+      "neutral_pcs_removed": 6
+    },
+    "24": {
+      "held_out_auroc_desperate_vs_calm": 1.0,
+      "held_out_auroc_desperate_vs_other_emotions": 0.8654545454545455,
+      "held_out_auroc_task_badly_vs_well": 1.0,
+      "neutral_pcs_removed": 5
+    },
+    "30": {
+      "held_out_auroc_desperate_vs_calm": 1.0,
+      "held_out_auroc_desperate_vs_other_emotions": 0.8593939393939394,
+      "held_out_auroc_task_badly_vs_well": 1.0,
+      "neutral_pcs_removed": 7
+    }
+  }
+}
