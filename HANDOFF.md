@@ -35,6 +35,11 @@ Last updated 20 Nov 2026, ~05:45 IST. The repo was renamed from `EMA` to `rememb
 - Approve the usage-visibility setup (option B in `EMA_USAGE_BUDGET.md`) after the reset?
 
 ## Local environment notes
-- Python venv with Inspect, ImpossibleBench and the Kaggle CLI: `C:\Users\nisch\AppData\Local\Temp\claude\01773d3d55ae5229\6d9f57a5-f6da-4edb-8802-88de73849c53\scratchpad\venv`. It's in a temp folder, so recreate it from the README if it's gone.
+- **Working files live in `C:\Users\nisch\claude\EMA-work`** (outside the repo, not in git; moved from the temp scratchpad on 22 Nov). It holds:
+  - `venv/`: Inspect, ImpossibleBench, Kaggle CLI 2.2.5, CPU torch;
+  - `ckernel/` and `h2kernel/`: the two Kaggle kernel folders;
+  - `dataset/`: the logs dataset folder.
+
+  Its `README.md` lists what each is for. Run the handover steps from that folder.
 - Run `inspect` with `PYTHONIOENCODING=utf-8` on Windows.
 - Kaggle token: `~/.kaggle/kaggle.json` (account `claude01012000`).
