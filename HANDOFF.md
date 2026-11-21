@@ -11,15 +11,16 @@ Last updated 20 Nov 2026, ~05:45 IST. The repo was renamed from `EMA` to `rememb
 
 ## In progress: Qwen confirmatory run on Kaggle
 - Kernel: `claude01012000/ema-confirmatory-qwen3-4b` (private). Logs dataset: `claude01012000/ema-confirmatory-logs` (private).
-- Progress: **934/2,060 unique finished samples after session 3** (ended 20 Nov ~07:25 IST), at about 36 samples/hour, so about 31 GPU-hours (3 sessions) remain. The logs dataset was versioned "after session 3 (934/2060)".
-- **Session 4 started 21 Nov ~09:07 IST** (kernel version 5) after the weekly GPU quota reset. When it finishes, do the handover steps below.
+- Progress: **1,116/2,060 unique finished samples after session 4** (ended 21 Nov). Session 4 added only 182 samples in ~11 hours (~17/hour, against ~36/hour before), on T4 x2 as usual, so the remaining samples are probably longer. At that rate ~944 samples need ~55 GPU-hours (about 5 sessions). The logs dataset was versioned "after session 4 (1116/2060)".
+- **Session 5 started 22 Nov ~00:52 IST** (kernel version 6). When it finishes, do the handover steps below.
+- Disclosure: while reading session 4's kernel log for the sample count, one line of its per-condition summary was seen (`original` split, condition B: pass 0.15, flag 0.77). It is recorded in the README disclosure. Read only the `unique finished samples` line from now on.
 - Logs from cancelled sessions are complete up to the interrupt. `eval_set` reports success even after a graceful interrupt, so judge progress by counting unique `(task, id, epoch)` samples. The notebook now does this.
 - **Handover steps between sessions:**
   1. `kaggle kernels output claude01012000/ema-confirmatory-qwen3-4b -p <dir>`. Check `STATUS.txt` and count the samples (see `results/README.md` for how).
   2. Put the contents of `<dir>/logs/confirmatory_qwen3-4b/` into a folder with `dataset-metadata.json` (id `claude01012000/ema-confirmatory-logs`). Copy `.eval-set-id` to `eval-set-id.txt`, because Kaggle drops dotfiles.
   3. Run `kaggle datasets version -p <folder> -m "after session N"`, using a **relative** path; Git Bash absolute paths get mangled.
   4. Run `kaggle kernels push -p <kernel dir> --accelerator NvidiaTeslaT4`. The kernel metadata must list the dataset in `dataset_sources`.
-- Expected: about 4–5 more sessions (~47 GPU-hours). If the weekly GPU quota runs out, wait for its reset.
+- Expected: about 5 more sessions (~55 GPU-hours) at session 4's rate. If the weekly GPU quota runs out, wait for its reset.
 
 ## Next, in order, each needing Nischal's OK
 1. **Sonnet 5.5 confirmatory run** (≈ $300, *not approved*). The pre-registration allows it now that Haiku cleared the floor. If it runs, H4-C is `python -m ema.stats_claude results/claude/confirmatory_haiku results/claude/confirmatory_sonnet`. Before spending, consider a pre-registered follow-up that scores *disclosure* instead of any pass, since that is where the exploratory signal is.
