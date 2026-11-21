@@ -92,6 +92,27 @@ def test_h2_statistic_detects_a_desperate_only_shift():
     assert null["p"] > 0.05
 
 
+def test_turn_count_alone_does_not_make_h2_positive():
+    """C fails more (more turns); every turn after the first scores higher; no condition effect."""
+    from ema.stats import compare
+    rng = np.random.default_rng(0)
+    names = ["emotion:desperate"] + [f"control:{i}" for i in range(6)] + [f"random_{i}" for i in range(6)]
+    records = []
+    for cond, n_turns in (("B", 2), ("C", 6)):
+        for t in range(30):
+            for e in (1, 2, 3):
+                proj = {n: list(rng.standard_normal(n_turns) * 0.3) for n in names}
+                proj["emotion:desperate"] = [x + (0.0 if i == 0 else 2.0) for i, x in enumerate(proj["emotion:desperate"])]
+                records.append({"condition": cond, "task_id": f"t{t}", "epoch": e, "proj": {"24": proj}})
+    from ema.h2.stats_h2 import token_scores
+    raw = {c: {} for c in "BC"}
+    for r, s in zip(records, token_scores(records, "24")):
+        raw[r["condition"]].setdefault(r["task_id"], []).append(s.mean())
+    raw = {c: {t: float(np.mean(v)) for t, v in d.items()} for c, d in raw.items()}
+    assert compare(raw, "C", "B")["p"] < 0.001  # the confound the adjustment removes
+    assert compare(per_task(records, "24"), "C", "B")["p"] > 0.05
+
+
 @pytest.mark.network
 def test_decision_positions_match_generation_prompts():
     transformers = pytest.importorskip("transformers")

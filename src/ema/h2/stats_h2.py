@@ -3,8 +3,10 @@
 Per decision token, each direction's projection is z-scored over all decision
 tokens in the file (every condition pooled, so the scaling cannot favour one
 condition). A token's score is z(target) minus the mean z over the 12 control
-directions (6 emotion-free semantic, 6 random). A sample's score is the mean
-over its decision tokens; a task's score is the mean over epochs. Conditions
+directions (6 emotion-free semantic, 6 random). Each token score then has the
+pooled mean at its turn index subtracted, so samples with more turns are not
+favoured. A sample's score is the mean over its decision tokens; a task's
+score is the mean over epochs. Conditions
 are compared per task with the frozen ema.stats.compare (sign-flip
 permutation test, paired bootstrap CI).
 
@@ -49,10 +51,24 @@ def token_scores(records: list[dict], layer: str, target: str = TARGET) -> list[
     return out
 
 
+def turn_adjusted(scores: list[np.ndarray]) -> list[np.ndarray]:
+    """Subtract, at each decision-token index, the mean over all samples (every condition pooled).
+
+    Later turns score higher than the first, and samples that keep failing have more of them,
+    so an unadjusted per-sample mean would rise with turn count alone.
+    """
+    by_turn: dict[int, list[float]] = defaultdict(list)
+    for s in scores:
+        for i, v in enumerate(s):
+            by_turn[i].append(float(v))
+    mean = {i: np.mean(v) for i, v in by_turn.items()}
+    return [s - np.array([mean[i] for i in range(len(s))]) for s in scores]
+
+
 def per_task(records: list[dict], layer: str, target: str = TARGET, first_only: bool = False) -> dict:
-    """{condition: {task_id: mean over epochs of the sample score}}."""
+    """{condition: {task_id: mean over epochs of the sample score}}, after the turn-index adjustment."""
     vals: dict[str, dict[str, list[float]]] = defaultdict(lambda: defaultdict(list))
-    for r, s in zip(records, token_scores(records, layer, target)):
+    for r, s in zip(records, turn_adjusted(token_scores(records, layer, target))):
         vals[r["condition"]][r["task_id"]].append(float(s[0] if first_only else s.mean()))
     return {c: {t: sum(v) / len(v) for t, v in tasks.items()} for c, tasks in vals.items()}
 
